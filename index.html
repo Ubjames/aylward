@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aylward kids Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="magic.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+
+</head>
+<body>
+    <div class="bg-images flex">
+        <img src="images/e64971deae1240688846b2f51e7847f5.jpg" alt="">
+    </div>
+
+    <div class="body-wrapper flex-end">
+        <div class="bodycontent flex-col">
+            <div class="flex-col springZoomIn cont">
+                <div class="logo-cont flex">
+                    <img src="images/deadly.png" alt="">
+                </div>
+                
+                <button class="play slideDown" onclick="aylward.types()">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>Play</span>
+                </button>
+        </div>
+
+        </div>
+    </div>
+
+    <section class="hide types">
+       <header class="flex-space-around">
+           <button class="default-off" onclick="aylward.backTo(window.location.reload())">
+               <i class="fas fa-arrow-left"></i>
+           </button>
+           <div class="text">Game</div>
+           <div class="logo flex">
+               <img src="images/logo-small.png" alt="">
+           </div>
+       </header>
+<div class="flex-col-evenly type-wrapper">
+        <p style="animation: fadeIn 0.8s ease-in 100ms forwards; visibility:hidden">Select type</p> 
+
+        <div class="type-cont">
+            <div class="item flex-left" data-type="Animals" style="animation: fadeInUp 0.8s ease 0ms forwards; visibility: hidden" onclick="aylward.loadGameType(this)">
+                <div class="photo-cont flex">
+                    <img src="images/animal.png" alt="">
+                </div>
+                <span>Animals</span>
+            </div>
+
+            <div class="item flex-left" data-type="Numbers" style="animation: fadeInUp 0.8s ease 100ms forwards; visibility: hidden" onclick="aylward.loadGameType(this)">
+                <div class="photo-cont flex">
+                    <img src="images/123.jpg" alt="">
+                </div>
+                <span>Numbers</span>
+            </div>
+            <div class="item flex-left"  data-type="Alphabets" style="animation: fadeInUp 0.8s ease 200ms forwards; visibility: hidden" onclick="aylward.loadGameType(this)">
+                <div class="photo-cont flex">
+                    <img src="images/abc.png" alt="">
+                </div>
+                <span>Alphabets</span>
+            </div>
+
+            <div class="item flex-left"  data-type="Transport" style="animation: fadeInUp 0.8s ease 300ms forwards; visibility: hidden" onclick="aylward.loadGameType(this)">
+                <div class="photo-cont flex">
+                    <img src="images/car.jpg" alt="">
+                </div>
+                <span>Transport</span>
+            </div>
+
+            <div class="item flex-left"  data-type="Vegitables" style="animation: fadeInUp 0.8s ease 400ms forwards; visibility: hidden" onclick="aylward.loadGameType(this)">
+                <div class="photo-cont flex">
+                    <img src="images/fruit.png" alt="">
+                </div>
+                <span>Fruits</span>
+            </div>
+
+            <div class="item flex-left"  data-type="Sports" style="animation: fadeInUp 0.8s ease 500ms forwards; visibility: hidden" onclick="aylward.loadGameType(this)">
+                <div class="photo-cont flex">
+                    <img src="images/ball.png" alt="">
+                </div>
+                <span>Sports</span>
+            </div>
+
+        </div>
+        </div>
+
+    </section>
+
+    <section class="hide gameboard">
+        <header class="flex-space-around" >
+            <button class="default-off" onclick="aylward.backTo(aylward.types())">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="text">Game</div>
+            <div class="logo flex">
+                <img src="images/logo-small.png" alt="">
+            </div>
+        </header>
+
+        <div class="game-wrapper flex-space-evenly">
+            <div class="flex-col cols">
+                <div class="col-item flex" style="animation: fadeInUp 0.8s ease 100ms forwards; visibility: hidden">
+                    <img src="" ondragstart="aylward.ItemDragStart(event)"  draggable="true" alt="">
+                </div>
+
+                <div class="col-item flex" style="animation: fadeInUp 0.8s ease 200ms forwards; visibility: hidden">
+                    <img src="" draggable="true" ondragstart="aylward.ItemDragStart(event)" ></div>
+
+                <div class="col-item flex" style="animation: fadeInUp 0.8s ease 300ms forwards; visibility: hidden">
+                    <img src="" draggable="true" ondragstart="aylward.ItemDragStart(event)" ></div>
+
+                <div class="col-item flex" style="animation: fadeInUp 0.8s ease 400ms forwards; visibility: hidden">
+                    <img src="" draggable="true" ondragstart="aylward.ItemDragStart(event)" ></div>
+
+                <div class="col-item flex" style="animation: fadeInUp 0.8s ease 500ms forwards; visibility: hidden">
+                    <img src="" draggable="true" ondragstart="aylward.ItemDragStart(event)" ></div>
+            </div>
+
+
+<!-- drop zones -->
+
+            <div class="flex-col cols">
+                <div class="col-item side2 dropzone flex" ondragleave="aylward.isOut(event)" ondragover="aylward.isOver(event)" ondrop="aylward.ItemDrop(event)" dropzone="true" style="animation: fadeInUp 0.8s ease 100ms forwards; visibility: hidden">
+                    DOG
+                    <img src="">
+                </div>
+                <div class="col-item side2 dropzone flex" ondragleave="aylward.isOut(event)" ondragover="aylward.isOver(event)" dropzone="true" ondrop="aylward.ItemDrop(event)" style="animation: fadeInUp 0.8s ease 200ms forwards; visibility: hidden">
+                ELEPHANT
+                <img src="">
+                </div>
+                <div class="col-item side2 dropzone flex" ondragleave="aylward.isOut(event)" ondragover="aylward.isOver(event)" ondrop="aylward.ItemDrop(event)"  style="animation: fadeInUp 0.8s ease 300ms forwards; visibility: hidden">
+                LION
+                <img src="">
+                </div>
+                <div class="col-item side2 dropzone flex" ondragleave="aylward.isOut(event)" ondragover="aylward.isOver(event)" ondrop="aylward.ItemDrop(event)"  style="animation: fadeInUp 0.8s ease 400ms forwards; visibility: hidden">
+                LIZARD
+                <img src="">
+                </div>
+                <div class="col-item side2 dropzone flex" ondragleave="aylward.isOut(event)" ondragover="aylward.isOver(event)"  ondrop="aylward.ItemDrop(event)" style="animation: fadeInUp 0.8s ease 500ms forwards; visibility: hidden">
+                HIPPOPOTAMUS
+                <img src="">
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </section>
+
+
+</body>
+<script defer src="script.js"></script>
+</html>

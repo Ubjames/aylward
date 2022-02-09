@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh; font-family: 'Mulish', 'sans-serif';
+}
+.bg-images{
+    width: 100%;  height: 100%; position: relative;filter: brightness(75%)
+    
+}
+.bg-images img{
+    width: 100%; object-fit: cover; height: 100%;
+}
+
+.body-wrapper{
+    position: absolute; width: 95%; height: 90%; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50px; background-color: rgba(255, 255, 255, 0.281); 
+    backdrop-filter: blur(0.5rem); overflow: hidden; 
+}
+
+.bodycontent .cont .logo-cont{ width: 200px; height: 200px; }
+.bodycontent .cont .logo-cont img{ width: 100%; height: auto;}
+
+@media screen and (max-width:400px) {
+    .bodycontent .cont .logo-cont{ width: 150px; height: 150px; }
+    /* .bodycontent .cont .logo-cont img{ width: 100%; height: auto;} */
+    
+}
+
+.body-wrapper .bodycontent{
+    width: 100%; height: calc(100% - 70px); 
+}
+.body-wrapper .bodycontent .cont{
+    width: 90%; height: 100%;
+}
+.bodycontent header{
+    position: absolute; width: 100%; height: 70px; background-color: rgba(255, 255, 255, 0.425); top: 0; font-size: 1.5rem;
+}
+.bodycontent header .logo{
+    width: 50px; height:50px;
+}
+.bodycontent header button{
+    width: 100px; height:50px;border-radius: 50px; font-size: 1.5rem; background-color: transparent; transition: transform 0.2s ease, background-color 0.5s ease;
+}
+.bodycontent header button:hover{background-color: inherit;}
+.bodycontent header button:active{   
+     transform: scale(0.9, 0.9);  
+}
+
+.bodycontent header .logo img{
+    width: 100%; height:auto; 
+}
+.body-wrapper .bodycontent .cont .play:hover{
+    background-color: rgba(255, 0, 119, 0.952);
+     box-shadow: 3px 5px 15px grey;
+}
+.body-wrapper .bodycontent .cont .play:active{
+    transform: scale(0.9, 0.9);  transition:transform 200ms ease;
+}
+.body-wrapper .bodycontent .cont .play{
+    width: 28%; margin-top: 100px; height: 55px; background-color: rgba(253, 29, 134, 0.952); border: none; border-radius: 5px ; color: #fff; font-size: 1.5rem; box-shadow: 0 0 2px grey; transition:box-shadow 200ms ease; cursor: pointer; font-family: 'Mulish', 'sans-serif';
+}
+
+@media screen and (max-width:500px) {
+    .body-wrapper .bodycontent .cont .play{
+        width: 80%;
+    }
+    
+}
+.type-wrapper {
+    width: 80%; height: 100%;
+}
+.type-wrapper > p{
+font-size: 1.8rem;
+}
+.type-wrapper .type-cont {
+    width: 100%;display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    column-gap: 50px; row-gap: 40px; 
+}
+@media  screen and (max-width:500px) {
+    .type-wrapper .type-cont {
+        width: 100%;display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        column-gap: 10px; row-gap: 10px; 
+    }
+    .type-wrapper > p{
+        font-size: 1.1rem;
+        }
+    
+}
+
+.type-wrapper .type-cont .item{
+    border-radius: 50px; background-color: #fff; box-shadow: 0 0 2px grey; height: 60px; padding: 5px; cursor: pointer;transition: 200ms ease;
+    
+}
+.type-wrapper .type-cont .item:hover{
+    box-shadow: 2px 5px 15px grey; 
+}
+.type-wrapper .type-cont .item:active{
+    transform: scale(0.9, 0.9);  
+
+}
+.type-cont .item span{
+    margin-left: 20px; font-size: 1.3rem;
+}
+.type-wrapper .type-cont .item .photo-cont{
+    width: 50px; height: 50px; overflow: hidden; border-radius: 50%;
+}
+.item .photo-cont img{
+    width: 100%; height: auto;
+}
+
+ .game-wrapper{
+    width: 100%; height: 100%;
+}
+ .game-wrapper .col-item{
+    width: 100px; height: 100px;  margin-bottom: 10px;
+}
+@media screen and (max-width:500px) {
+    .game-wrapper .col-item{
+       width: 70px; height: 70px; 
+       margin-bottom: 20px;
+       /* justify-content: space-between; */
+        /* align-items: stretch; */
+         /* text-align: center; */
+        /* display: flex; */
+   }  
+}
+.game-wrapper .col-item img{
+    width: 100%; height: auto;
+}
+
+.game-wrapper .side2{
+    background-color: #ffffff75; border-radius: 5px; width: 150px; transition:  outline ease 0.5s, box-shadow ease 1s; user-select: none; -moz-user-select: none;
+
+}
+@media screen and (max-width:500px) {
+    .game-wrapper .side2{
+       font-size: 14px;
+        
+    }
+}
+    
+
+.cols .active {
+    animation-name: dropzone !important;
+    animation-play-state: running;
+    animation-duration: 500ms !important;
+    animation-iteration-count: infinite !important;
+    animation-timing-function: ease !important;
+    visibility: visible !important;
+    
+}
+.inactive{
+      visibility: visible !important;;
+      animation-play-state: paused !important;
+
+  }
+  
+  @keyframes dropzone {
+    from { 
+        outline:none;
+        box-shadow: none;
+        
+    }
+    to {
+       outline: 3px solid #00e3ff;
+        box-shadow: 0px 0px 10px #00e3ff;
+    }
+  }
+  .side2{
+      position: relative;
+  }
+
+  .side2 img{
+      display:none; 
+    }
+  .mark img{
+      display:block; position :absolute; top: 0;
+      right: 0;
+      width: 30px !important;
+      height: auto;
+  }
