@@ -2,6 +2,14 @@ var aylward = {
     body:document.querySelector('.bodycontent'),
     dropzone:null,
     draggedElement:null,
+    target:null,
+    init:()=>{
+       
+// document.querySelector(".bodycontent").requestFullscreen().catch(e=>{
+//     console.log(e)
+// })
+
+    },
     images:{
         animals:{
             images: ['images/animal.png', 'images/lion.png', 'images/elephant.png', 'images/hippopotamus.png', 'images/lizard.png'],
@@ -62,29 +70,36 @@ ItemDragStart : (e)=>{
     // console.log(e.target.getAttribute('data-object'))
 },
 ItemDrop : (e)=>{
-
-    if(aylward.draggedElement == e.target.getAttribute('data-objectName')){
-        aylward.isOut(event)
+    // console.log(e.type)
+    let arguement;
+    if(e.type === 'touchend'){
+        arguement = aylward.draggedElement == aylward.target.getAttribute('data-objectName')
+    }else{
+        arguement = aylward.draggedElement == e.target.getAttribute('data-objectName');
+    }
+    
+// console.log( aylward.draggedElement aylward.target.getAttribute('data-objectName'))
+        if(arguement){
+        aylward.isOut(event);
         new Audio('audio/success.wav').play();
-        e.target.classList.add('mark')
-        e.target.firstElementChild.src = 'images/correct.png';
+        let device = e.type === 'touchend'?aylward.target:e.target;
+        device.classList.add('mark');
+        device.firstElementChild.src = 'images/correct.png';
         
     }else{
         new Audio('audio/error.wav').play();
         aylward.isOut(event)
         let dp_zone = (document.querySelectorAll('.bodycontent .game-wrapper >div:last-child .col-item'))
         Array.from(dp_zone).forEach((objName)=>{
-            // console.log(objName.getAttribute('data-objectName'))
             if(objName.getAttribute('data-objectName') == aylward.draggedElement){
                 objName.classList.add('mark')
                 objName.firstElementChild.src = 'images/wrong.png';
-                // console.log(objName.getAttribute('data-objectName'))
-                // console.log(aylward.draggedElement)
             }
             
         })
         
     }
+
 
  },
  isOver : (e)=>{
@@ -104,6 +119,86 @@ isOut : (e)=>{
         // console.log('left...')
     // }
     // console.log(  e.target.getAttribute('data-objectName') )
- }
-}
+ },
+ 
+ touch:{
+     draggingElement:null,
+     firstTouch:null,
+     isDropZone:(resolve,reject)=>{
+        //  return new Promise((res,rej)=>{
+            document.querySelectorAll('.bodycontent .game-wrapper >div:last-child .col-item').forEach((e,i,arr)=>{
+                if(aylward.touch.draggingElement.getBoundingClientRect().right >= e.getBoundingClientRect().left && aylward.touch.draggingElement.getBoundingClientRect().left < e.getBoundingClientRect().right && aylward.touch.draggingElement.getBoundingClientRect().bottom >= e.getBoundingClientRect().top && aylward.touch.draggingElement.getBoundingClientRect().top <= e.getBoundingClientRect().bottom){
+                     resolve = e;
+            }
+            reject = arr;
+            
+    })
+    return {'resolve':resolve,'reject':reject};
+     },
+     start:(e)=>{
+        //  e.preventDefault();
+        let touch = e.targetTouches[0];
+        aylward.touch.firstTouch={y:touch.clientY, x:touch.clientX};
+     
+        if(touch.target.parentElement.children.length !== 2){
+            aylward.touch.draggingElement = document.createElement(touch.target.tagName);
+            aylward.touch.draggingElement.src = touch.target.getAttribute('src');
+            aylward.touch.draggingElement.setAttribute('data-object',touch.target.getAttribute('data-object'));
+            aylward.touch.draggingElement.setAttribute('id','draggingElement');
+            touch.target.parentElement.appendChild(aylward.touch.draggingElement);
+            aylward.touch.draggingElement.style.position = 'absolute';
+            aylward.draggedElement = aylward.touch.draggingElement.getAttribute('data-object');
 
+        }
+     },
+     move:(e)=>{
+        e.preventDefault();
+        let touch= e.targetTouches[0];
+        let newX = aylward.touch.firstTouch.x -touch.clientX;
+        let newY = aylward.touch.firstTouch.y -touch.clientY;
+        
+        aylward.touch.draggingElement.style.left = `${-newX}px`;
+        aylward.touch.draggingElement.style.top = `${-newY}px`;
+
+        if(aylward.touch.isDropZone().resolve!==undefined){
+           let res = aylward.touch.isDropZone().resolve;
+            res.classList.contains('inactive')?res.classList.replace('inactive','active'): res.classList.add('active');
+            aylward.touch.isDropZone().reject.forEach(e=>{
+                if(e !== res){
+                    e.classList.contains('active')?e.classList.replace('active','inactive'): e.classList.add('inactive');
+
+                }
+            });
+            
+            
+        }else{
+             aylward.touch.isDropZone().reject.forEach(e=>{e.classList.contains('active')?e.classList.replace('active','inactive'): e.classList.add('inactive')});
+        }
+
+       
+     },
+     end:(e)=>{
+         let res = aylward.touch.isDropZone();
+           if(res.resolve!==undefined){
+               aylward.target =res.resolve;
+               aylward.ItemDrop(event);    
+           } 
+           res.reject.forEach(e=>{
+               e.classList.contains('active')?e.classList.replace('active','inactive'): e.classList.add('inactive');
+            });
+
+            aylward.touch.draggingElement.parentElement.removeChild(aylward.touch.draggingElement);
+     }
+ }
+
+
+
+
+
+
+
+
+
+
+}
+aylward.init();
