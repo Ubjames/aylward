@@ -1,5 +1,6 @@
 let cacheableAssets = [
-    '/index.html', '/magic.html', '/manifest.webmanifest','/script.js','/style.css'
+    '/index.html', '/magic.html', '/manifest.webmanifest','/script.js','/style.css', '/images','/audio'
+    // './ayward'
 ];
 let cacheName = 'sw-cache';
 self.addEventListener('install', event => {
