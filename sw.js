@@ -1,13 +1,10 @@
-let cacheableAssets = [
-    '/index.html', '/magic.html', '/manifest.webmanifest','/script.js','/style.css', '/images','/audio'
-    // './ayward'
-];
+let cacheableAssets = ['/','/index.html', '/magic.html', '/manifest.webmanifest','/script.js','/style.css', '/images', '/audio'];
 let cacheName = 'sw-cache';
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(cacheName).then((cache)=>{
            cache.addAll(cacheableAssets);
-            //  self.wai
+            
         })
     )
 });
@@ -26,12 +23,13 @@ self.addEventListener('activate', event => {
     );
     
 }); */
+
+
 self.addEventListener('fetch', async e => {
     const req = e.request;
     const url = new URL(req.url);
-  
     if (url.origin === location.origin) {
-      e.respondWith(cacheFirst(req));
+        e.respondWith(cacheFirst(req));
     } else {
       e.respondWith(networkAndCache(req));
     }
@@ -40,7 +38,8 @@ self.addEventListener('fetch', async e => {
   async function cacheFirst(req) {
     const cache = await caches.open(cacheName);
     const cached = await cache.match(req);
-    return cached || fetch(req);
+    console.log(cache)
+    return cached
   }
   
   async function networkAndCache(req) {
@@ -54,4 +53,3 @@ self.addEventListener('fetch', async e => {
       return cached;
     }
   }
-  
