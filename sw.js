@@ -1,4 +1,4 @@
-let cacheableAssets = ['/','/index.html', '/magic.html', '/manifest.webmanifest','/script.js','/style.css', '/images', '/audio'];
+let cacheableAssets = ['/','index.html', 'magic.html', 'manifest.webmanifest','script.js','style.css', 'images/', 'audio/'];
 let cacheName = 'sw-cache';
 self.addEventListener('install', event => {
     event.waitUntil(
