@@ -1,4 +1,4 @@
-let cacheableAssets = ['./', '/index.html', 'images/','audio/', '/script.js', '/style.css', '/manifest.webmanifest', '/magic.css'];
+let cacheableAssets = ['./', '/index.html', 'images/','audio/error.wav','audio/success.wav', '/script.js', '/style.css', '/manifest.webmanifest', '/magic.css'];
 let cacheName = 'static-v1.1';
 self.addEventListener('install', event => {
     event.waitUntil(
@@ -44,7 +44,7 @@ self.addEventListener('fetch',  e => {
         } catch (e) {
           // if there's an internet error, search the request from the cached files and return it back to the user;
           const cached = await cache.match(req);
-          console.log(cached.url)
+          // console.log(cached.url)
           return cached;
         }
       })());
