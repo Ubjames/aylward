@@ -43,8 +43,8 @@ self.addEventListener('fetch',  e => {
           return fresh; 
         } catch (e) {
           // if there's an internet error, search the request from the cached files and return it back to the user;
-          console.log('error: couldnt fetch')
           const cached = await cache.match(req);
+          console.log(cached.url)
           return cached;
         }
       })());
