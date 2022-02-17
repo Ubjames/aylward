@@ -163,8 +163,9 @@ font-size: 1.8rem;
     animation-timing-function: ease !important;
     visibility: visible !important;
     transform: scale(1.1, 1.1);   
-   
 }
+   
+
 .inactive{
       visibility: visible !important;;
       animation-play-state: paused !important;

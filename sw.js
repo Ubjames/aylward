@@ -1,5 +1,5 @@
-let cacheableAssets = ['/','index.html', 'magic.html', 'manifest.webmanifest','script.js','style.css', 'images/', 'audio/'];
-let cacheName = 'sw-cache';
+let cacheableAssets = ['./', '/index.html', 'images/','audio/', '/script.js', '/style.css', '/manifest.webmanifest', '/magic.css'];
+let cacheName = 'static-v1.1';
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(cacheName).then((cache)=>{
@@ -25,20 +25,45 @@ self.addEventListener('activate', event => {
 }); */
 
 
-self.addEventListener('fetch', async e => {
-    const req = e.request;
+self.addEventListener('fetch',  e => {
+    /* const req = e.request;
     const url = new URL(req.url);
     if (url.origin === location.origin) {
         e.respondWith(cacheFirst(req));
     } else {
       e.respondWith(networkAndCache(req));
-    }
+      } */
+      
+      e.respondWith(async ()=>{
+        const cache = await caches.open(cacheName); //check cached files first
+    try {
+          const fresh = await fetch(e.request); //fetch from network
+          await cache.put(e.request, fresh.clone()); //cache the informations fetched
+          return fresh; 
+        } catch (e) {
+          // if there's an internet error, search the request from the cached files and return it back to the user;
+          const cached = await cache.match(e.request);
+          return cached;
+        }
+      })();
+
   });
   
+
+
+
+
+
+
+
+
+
+
+
   async function cacheFirst(req) {
     const cache = await caches.open(cacheName);
     const cached = await cache.match(req);
-    console.log(cache)
+    // console.log(cache)
     return cached
   }
   
