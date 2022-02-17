@@ -25,15 +25,9 @@ self.addEventListener('activate', event => {
 }); */
 
 
-self.addEventListener('fetch',  e => {
+ self.addEventListener('fetch',  e => {
     const req = e.request;
-    /* const url = new URL(req.url);
-    if (url.origin === location.origin) {
-        e.respondWith(cacheFirst(req));
-    } else {
-      e.respondWith(networkAndCache(req));
-      } */
-      
+
       e.respondWith((async ()=>{
         const cache = await caches.open(cacheName); //check cached files first
     try {
@@ -49,8 +43,8 @@ self.addEventListener('fetch',  e => {
         }
       })());
 
-  });
-  
+  }); 
+
 
 
 
