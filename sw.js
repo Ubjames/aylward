@@ -26,26 +26,28 @@ self.addEventListener('activate', event => {
 
 
 self.addEventListener('fetch',  e => {
-    /* const req = e.request;
-    const url = new URL(req.url);
+    const req = e.request;
+    /* const url = new URL(req.url);
     if (url.origin === location.origin) {
         e.respondWith(cacheFirst(req));
     } else {
       e.respondWith(networkAndCache(req));
       } */
       
-      e.respondWith(async ()=>{
+      e.respondWith((async ()=>{
         const cache = await caches.open(cacheName); //check cached files first
     try {
-          const fresh = await fetch(e.request); //fetch from network
-          await cache.put(e.request, fresh.clone()); //cache the informations fetched
+          const fresh = await fetch(req); //fetch from network
+          await cache.put(req, fresh.clone()); //cache the informations fetched
+          console.log('trying to fetch: fetching...')
           return fresh; 
         } catch (e) {
           // if there's an internet error, search the request from the cached files and return it back to the user;
-          const cached = await cache.match(e.request);
+          console.log('error: couldnt fetch')
+          const cached = await cache.match(req);
           return cached;
         }
-      })();
+      })());
 
   });
   
