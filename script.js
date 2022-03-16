@@ -89,13 +89,13 @@ ItemDrop : (e)=>{
 // console.log( aylward.draggedElement aylward.target.getAttribute('data-objectName'))
         if(arguement){
         aylward.isOut(event);
-        new Audio('audio/success.mp3').play();
+        document.getElementById('audio_success').play();
         let device = e.type === 'touchend'?aylward.target:e.target;
         device.classList.add('mark');
         device.firstElementChild.src = 'images/correct.png';
         
     }else{
-        new Audio('audio/error.mp3').play();
+        document.getElementById('audio_error').play();
         aylward.isOut(event)
         let dp_zone = (document.querySelectorAll('.bodycontent .game-wrapper >div:last-child .col-item'))
         Array.from(dp_zone).forEach((objName)=>{
