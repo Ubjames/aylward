@@ -33,7 +33,7 @@ self.addEventListener('activate', event => {
     try {
           const fresh = await fetch(req); //fetch from network
           await cache.put(req, fresh.clone()); //cache the informations fetched
-          console.log('trying to fetch: fetching...')
+          // console.log('trying to fetch: fetching...')
           return fresh; 
         } catch (e) {
           // if there's an internet error, search the request from the cached files and return it back to the user;
