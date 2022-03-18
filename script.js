@@ -81,7 +81,9 @@ ItemDrop : (e)=>{
     let targetElement = e.type === 'touchend'?aylward.target:e.target;
     let isRightTarget;
 
-    if(targetElement.classList.contains('answered'))return;
+    if(targetElement.classList.contains('answered')){
+        return Navigator.vibrate([200]);
+    }
 
     if(e.type === 'touchend'){
         isRightTarget = aylward.draggedElement == aylward.target.getAttribute('data-objectName');
@@ -96,6 +98,7 @@ ItemDrop : (e)=>{
         targetElement.firstElementChild.src = 'images/correct.png';
         
     }else{
+        Navigator.vibrate([200, 100, 200])
         const playSound = document.getElementById('audio_error').play();
         if(playSound !==undefined){
             playSound.then((res)=>{
