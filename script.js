@@ -78,33 +78,44 @@ ItemDragStart : (e)=>{
     // console.log(e.target.getAttribute('data-object'))
 },
 ItemDrop : (e)=>{
-    // console.log(e.type)
-    let arguement;
+    let targetElement = e.type === 'touchend'?aylward.target:e.target;
+    let isRightTarget;
+
+    if(targetElement.classList.contains('answered'))return;
+
     if(e.type === 'touchend'){
-        arguement = aylward.draggedElement == aylward.target.getAttribute('data-objectName')
+        isRightTarget = aylward.draggedElement == aylward.target.getAttribute('data-objectName');
     }else{
-        arguement = aylward.draggedElement == e.target.getAttribute('data-objectName');
+        isRightTarget = aylward.draggedElement == e.target.getAttribute('data-objectName');
     }
-    
-// console.log( aylward.draggedElement aylward.target.getAttribute('data-objectName'))
-        if(arguement){
+
+    if(isRightTarget){
         aylward.isOut(event);
         document.getElementById('audio_success').play();
-        let device = e.type === 'touchend'?aylward.target:e.target;
-        device.classList.add('mark');
-        device.firstElementChild.src = 'images/correct.png';
+        targetElement.classList.add('mark');
+        targetElement.firstElementChild.src = 'images/correct.png';
         
     }else{
-        document.getElementById('audio_error').play();
+        const playSound = document.getElementById('audio_error').play();
+        if(playSound !==undefined){
+            playSound.then((res)=>{
+                console.log({res},'playing...');
+            }).catch((e)=>{
+                console.error(e,'NOTplaying...');
+
+            })
+        }
         aylward.isOut(event)
-        let dp_zone = (document.querySelectorAll('.bodycontent .game-wrapper >div:last-child .col-item'))
+        let dp_zone = document.querySelectorAll('.bodycontent .game-wrapper >div:last-child .col-item');
         Array.from(dp_zone).forEach((objName)=>{
             if(objName.getAttribute('data-objectName') == aylward.draggedElement){
-                objName.classList.add('mark')
-                objName.firstElementChild.src = 'images/wrong.png';
+                objName.classList.add('answered');
             }
             
         })
+        targetElement.classList.add('mark');
+        targetElement.firstElementChild.src = 'images/wrong.png';
+        // console.dir(targetElement)
         
     }
 
@@ -112,9 +123,7 @@ ItemDrop : (e)=>{
  },
  isOver : (e)=>{
      e.preventDefault();
-    if(e.target.getAttribute('data-objectName') === aylward.draggedElement){
-        
-    }
+     if(e.target.classList.contains('answered'))return;
 
     e.target.classList.contains('inactive')?e.target.classList.replace('inactive','active'): e.target.classList.add('active');
 

@@ -190,6 +190,7 @@ font-size: 1.8rem;
   .side2 img{
       display:none; 
     }
+
   .mark img{
       display:block; position :absolute; top: 0;
       right: 0;
@@ -197,3 +198,37 @@ font-size: 1.8rem;
       height: auto;
   }
 
+.disabled img{
+    /* opacity: calc(); */
+}
+
+.disabled{
+    background-color: grey;
+    color: lightgrey;
+
+}
+
+.answered{
+    outline: 3px solid green;
+
+    animation-name: indicateAnswer !important;
+    animation-play-state: running;
+    animation-duration: 300ms !important;
+    animation-iteration-count: 2 !important;
+    animation-timing-function: ease-in-out !important;
+    visibility: visible !important;
+}
+
+@keyframes indicateAnswer{
+    0%{
+        outline: 3px solid rgba(0, 128, 0, 0);
+    }
+    50%{
+        outline: 3px solid rgba(0, 128, 0, 0);
+    }
+    100%{
+        outline: 3px solid green;
+
+    }
+
+}
