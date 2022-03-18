@@ -82,7 +82,7 @@ ItemDrop : (e)=>{
     let isRightTarget;
 
     if(targetElement.classList.contains('answered')){
-        return Navigator.vibrate([200]);
+        return window.navigator.vibrate([200]);
     }
 
     if(e.type === 'touchend'){
@@ -98,7 +98,7 @@ ItemDrop : (e)=>{
         targetElement.firstElementChild.src = 'images/correct.png';
         
     }else{
-        Navigator.vibrate([200, 100, 200])
+        window.navigator.vibrate([200, 100, 200])
         const playSound = document.getElementById('audio_error').play();
         if(playSound !==undefined){
             playSound.then((res)=>{
