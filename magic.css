@@ -16,7 +16,7 @@
 }
 .fadeInDown {
   animation-name: fadeInDown;
-  animation-duration: 1500ms;
+  animation-duration: 800ms;
   animation-fill-mode: forwards;
 }
 
@@ -327,7 +327,7 @@
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translateY(-30%);
+    transform: translateY(-10%);
   }
   to {
     opacity: 1;

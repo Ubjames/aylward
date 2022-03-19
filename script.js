@@ -3,6 +3,7 @@ var aylward = {
     dropzone:null,
     draggedElement:null,
     target:null,
+    score:null,
     init:()=>{
        
         (()=>{
@@ -77,18 +78,11 @@ ItemDragStart : (e)=>{
     aylward.draggedElement = e.target.getAttribute('data-object');
     // console.log(e.target.getAttribute('data-object'))
 },
-gameOver: ()=>{
-     return alert('GAME OVER!!!');
-},
+
 ItemDrop : (e)=>{
     let targetElement = e.type === 'touchend'?aylward.target:e.target;
     let isRightTarget;
     const beenAnswered = document.querySelectorAll('.answered');
-
-    console.log(beenAnswered.length );
-    if(beenAnswered.length >= 4){
-       setTimeout(aylward.gameOver,1000);
-    }
     
     if(targetElement.classList.contains('answered')){
         return window.navigator.vibrate([200]);
@@ -103,9 +97,11 @@ ItemDrop : (e)=>{
     if(isRightTarget){
         aylward.isOut(event);
         document.getElementById('audio_success').play();
-        targetElement.classList.add("mark", "answered");
+        targetElement.classList.add("mark", "answered", "right");
         targetElement.firstElementChild.src = 'images/correct.png';
-        
+
+  
+    
     }else{
         window.navigator.vibrate([200, 100, 200])
         const playSound = document.getElementById('audio_error').play();
@@ -130,6 +126,12 @@ ItemDrop : (e)=>{
         // console.dir(targetElement)
         
     }
+
+    if(beenAnswered.length >= 4){
+        aylward.score = document.querySelectorAll('.right').length;
+       setTimeout(aylward.gameOver,1000);
+    }
+    
 
 
  },
@@ -218,7 +220,70 @@ isOut : (e)=>{
 
             aylward.touch.draggingElement.parentElement.removeChild(aylward.touch.draggingElement);
      }
- }
+ },
+
+ gameOver: ()=>{
+     const VAR = {
+        summCont: document.getElementById('game-summary'),
+        scoreNum: document.querySelector('.score-board .score'),
+        scoreRatio: document.querySelector('.score-board'),
+        stars: document.querySelector('.stars'),
+        average: (aylward.score/5)*100,
+        remark:  document.querySelector('.remark')
+
+     }
+     VAR.summCont.classList.remove('hide');
+     VAR.summCont.children[0].children[0].onanimationend = ()=>{
+        VAR.scoreNum.innerHTML = aylward.score;
+        setInterval(()=>{
+            VAR.scoreRatio.style.background = `conic-gradient(#f834a5, #2d36db ${VAR.average}%, #f3f3f3 0)`;
+        },100)
+     };
+
+     switch (aylward.score) {
+         case 5:
+             VAR.remark.innerHTML = 'Perfection'
+             break;
+         case 4:
+             VAR.remark.innerHTML = 'Almost perfect'
+             break;
+         case 3:
+             VAR.remark.innerHTML = 'Well done'
+             break;
+         case 2:
+             VAR.remark = 'Great work'
+             break;
+         case 1:
+             VAR.remark.innerHTML = 'Good effort'
+             break;
+             
+             default:
+             VAR.remark.innerHTML = 'Keep playing'
+             break;
+     }
+
+     
+        if(aylward.score == 2){
+            VAR.stars.children[0].classList.add('stared', 'springZoomIn')
+                
+         }
+        else if(aylward.score == 3 || aylward.score == 4){
+            VAR.stars.children[0].classList.add('stared')
+            VAR.stars.children[1].classList.add('stared', 'springZoomIn')
+                
+         }
+        else if(aylward.score == 5){
+            VAR.stars.children[0].classList.add('stared')
+            VAR.stars.children[1].classList.add('stared')
+            VAR.stars.children[2].classList.add('stared', 'springZoomIn')
+                
+         }
+        
+
+
+     
+     
+}
 
 
 
