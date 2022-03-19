@@ -77,10 +77,19 @@ ItemDragStart : (e)=>{
     aylward.draggedElement = e.target.getAttribute('data-object');
     // console.log(e.target.getAttribute('data-object'))
 },
+gameOver: ()=>{
+     return alert('GAME OVER!!!');
+},
 ItemDrop : (e)=>{
     let targetElement = e.type === 'touchend'?aylward.target:e.target;
     let isRightTarget;
+    const beenAnswered = document.querySelectorAll('.answered');
 
+    console.log(beenAnswered.length );
+    if(beenAnswered.length >= 4){
+       setTimeout(aylward.gameOver,1000);
+    }
+    
     if(targetElement.classList.contains('answered')){
         return window.navigator.vibrate([200]);
     }
@@ -94,7 +103,7 @@ ItemDrop : (e)=>{
     if(isRightTarget){
         aylward.isOut(event);
         document.getElementById('audio_success').play();
-        targetElement.classList.add('mark');
+        targetElement.classList.add("mark", "answered");
         targetElement.firstElementChild.src = 'images/correct.png';
         
     }else{
@@ -109,10 +118,10 @@ ItemDrop : (e)=>{
             })
         }
         aylward.isOut(event)
-        let dp_zone = document.querySelectorAll('.bodycontent .game-wrapper >div:last-child .col-item');
+        const dp_zone = document.querySelectorAll('.bodycontent .game-wrapper >div:last-child .col-item');
         Array.from(dp_zone).forEach((objName)=>{
             if(objName.getAttribute('data-objectName') == aylward.draggedElement){
-                objName.classList.add('answered');
+                objName.classList.add("answered", "corrected");
             }
             
         })

@@ -208,7 +208,7 @@ font-size: 1.8rem;
 
 }
 
-.answered{
+.corrected{
     outline: 3px solid green;
 
     animation-name: indicateAnswer !important;
