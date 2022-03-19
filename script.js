@@ -39,8 +39,9 @@ var aylward = {
       
     },
     loadGameType:(btn)=>{
+        let type = btn instanceof HTMLElement ? btn.getAttribute('data-type') :'Animals';
+
         aylward.body.innerHTML = document.querySelector('.gameboard').innerHTML;
-        let type = btn.getAttribute('data-type');
         const side2 = document.querySelectorAll('.bodycontent .game-wrapper >div:last-child .col-item');
         const side1 =document.querySelectorAll('.bodycontent .game-wrapper >div:first-child .col-item');
 
@@ -229,11 +230,28 @@ isOut : (e)=>{
         scoreRatio: document.querySelector('.score-board'),
         stars: document.querySelector('.stars'),
         average: (aylward.score/5)*100,
-        remark:  document.querySelector('.remark')
+        remark:  document.querySelector('.remark'),
+        actionBtn: document.querySelector('.action-btn')
 
      }
      VAR.summCont.classList.remove('hide');
+
      VAR.summCont.children[0].children[0].onanimationend = ()=>{
+        if(aylward.score == 2){
+            VAR.stars.children[0].classList.add('stared', 'shake')
+                
+         }
+        else if(aylward.score == 3 || aylward.score == 4){
+            VAR.stars.children[0].classList.add('stared')
+            VAR.stars.children[1].classList.add('stared', 'shake')
+                
+         }
+        else if(aylward.score == 5){
+            VAR.stars.children[0].classList.add('stared')
+            VAR.stars.children[1].classList.add('stared')
+            VAR.stars.children[2].classList.add('stared', 'shake')
+                
+         }
         VAR.scoreNum.innerHTML = aylward.score;
         setInterval(()=>{
             VAR.scoreRatio.style.background = `conic-gradient(#f834a5, #2d36db ${VAR.average}%, #f3f3f3 0)`;
@@ -251,7 +269,7 @@ isOut : (e)=>{
              VAR.remark.innerHTML = 'Well done'
              break;
          case 2:
-             VAR.remark = 'Great work'
+             VAR.remark.innerHTML  = 'Great work'
              break;
          case 1:
              VAR.remark.innerHTML = 'Good effort'
@@ -264,21 +282,30 @@ isOut : (e)=>{
 
      
         if(aylward.score == 2){
-            VAR.stars.children[0].classList.add('stared', 'springZoomIn')
+            VAR.stars.children[0].classList.add('stared', 'shake')
                 
          }
         else if(aylward.score == 3 || aylward.score == 4){
             VAR.stars.children[0].classList.add('stared')
-            VAR.stars.children[1].classList.add('stared', 'springZoomIn')
+            VAR.stars.children[1].classList.add('stared', 'shake')
                 
          }
         else if(aylward.score == 5){
             VAR.stars.children[0].classList.add('stared')
             VAR.stars.children[1].classList.add('stared')
-            VAR.stars.children[2].classList.add('stared', 'springZoomIn')
+            VAR.stars.children[2].classList.add('stared', 'shake')
                 
          }
         
+
+VAR.actionBtn.children[0].onclick = ()=>{
+    aylward.loadGameType(); VAR.summCont.classList.add('hide');
+}
+VAR.actionBtn.children[1].onclick = ()=>{aylward.types(); VAR.summCont.classList.add('hide');}
+
+/* Array.from(VAR.actionBtn.children).forEach(btn=>{
+    btn.onclick = ()=>{VAR.summCont.classList.add('hide');};
+}) */
 
 
      
